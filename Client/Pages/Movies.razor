@@ -1,6 +1,6 @@
 ﻿@page "/movies"
-@using MovieJournal.Shared;
-@inject HttpClient Http;
+@using MovieJournal.Client.Services.MovieService;
+@inject IMovieService MovieService;
 
 <PageTitle>Movies</PageTitle>
 <h3>Movies</h3>
@@ -17,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach (var movie in movies)
+    @foreach (var movie in MovieService.Movies)
         {
             <tr>
               <td>@movie.Id</td>
@@ -33,10 +33,8 @@
 </table>
 
 @code {
-    private List<Movie>? movies = new List<Movie>();
-
     protected override async Task OnInitializedAsync()
     {
-        movies = await Http.GetFromJsonAsync<List<Movie>>("api/movie");
+        await MovieService.GetMovies();
     }
 }
