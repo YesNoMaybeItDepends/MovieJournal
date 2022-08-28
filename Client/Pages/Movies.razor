@@ -1,6 +1,7 @@
 ﻿@page "/movies"
 @using MovieJournal.Client.Services.MovieService;
 @inject IMovieService MovieService;
+@inject NavigationManager NavigationManager;
 
 <PageTitle>Movies</PageTitle>
 <h3>Movies</h3>
@@ -27,14 +28,28 @@
               <td>@movie.Year</td>
               <td>@movie.Stars</td>
               <td>@movie.Review</td>
+              <td>
+                <button class="btn btn-primary" @onclick="() => ShowMovie(movie.Id)"><i class="oi oi-pencil"/></button>
+              </td>
             </tr>
         }
     </tbody>
 </table>
+<button class="btn btn-primary" @onclick="CreateNewMovie">Create New Movie</button>
 
 @code {
     protected override async Task OnInitializedAsync()
     {
         await MovieService.GetMovies();
+    }
+
+    void ShowMovie(int id)
+    {
+        NavigationManager.NavigateTo($"movie/{id}");
+    }
+
+    void CreateNewMovie()
+    {
+        NavigationManager.NavigateTo("movie");
     }
 }

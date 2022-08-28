@@ -1,0 +1,85 @@
+﻿@page "/movie"
+@page "/movie/{id:int}"
+@using Services.MovieService;
+@inject IMovieService MovieService;
+@using MovieJournal.Shared;
+
+@if (Id == null)
+{
+  <PageTitle>Add a new movie</PageTitle>
+    <h3>Add a new movie</h3>
+}
+else
+{
+    <PageTitle>Edit @movie.Title</PageTitle>
+    <h3>Edit @movie.Title</h3>
+}
+
+<EditForm Model="movie">
+  
+  <label for="title">Title</label>
+  <InputText id="title" @bind-Value="movie.Title" class="form-control"/>
+
+  <label for="status">Status</label>
+  <InputText id="status" @bind-Value="movie.Status" class="form-control"/>
+
+  <label for="genre">Genre</label>
+  <InputText id="genre" @bind-Value="movie.Genre" class="form-control"/>
+
+  <label for="year">Year</label>
+  <InputNumber id="year" @bind-Value="movie.Year" class="form-control"/>
+
+  <label for="stars">Stars</label>
+  <InputNumber id="stars" @bind-Value="movie.Stars" class="form-control"/>
+
+  <label for="review">Review</label>
+  <InputText id="review" @bind-Value="movie.Review" class="form-control"/>
+
+  <button type="submit" class="btn btn-primary" @onclick="HandleSubmit">@buttonText</button>
+  @if (showDelete)
+    {
+      <button type="button" class="btn btn-danger">Delete</button>  
+    }
+</EditForm>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    public string buttonText = string.Empty;
+    public bool showDelete = false;
+
+    public MovieJournal.Shared.Movie movie = new MovieJournal.Shared.Movie();
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            movie = await MovieService.GetSingleMovie((int)Id);
+            showDelete = true;
+            buttonText = "Submit changes";
+        }
+        else
+        {
+            buttonText = "Submit new movie";  
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (Id != null)
+        {
+            MovieService.UpdateMovie(movie);
+            buttonText = "Submitted changes";
+        }
+        else
+        {
+            await MovieService.CreateMovie(movie);
+        }
+    }
+}

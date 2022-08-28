@@ -53,5 +53,14 @@ namespace MovieJournal.Server.Controllers
       }
       return NotFound($"Sorry, no movie found with the id '{id}'");
     }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<List<Movie>>> UpdateMovie(Movie movie)
+    {
+      Movies.RemoveAll((m => m.Id == movie.Id));
+      Movies.Insert(movie.Id, movie);
+
+      return Ok(Movies);
+    }
   }
 }
