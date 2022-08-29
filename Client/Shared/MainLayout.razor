@@ -1,14 +1,26 @@
 ﻿@inherits LayoutComponentBase
 
+
+
 <div class="page">
-    <div class="sidebar">
+@*    <div class="sidebar">
         <NavMenu />
-    </div>
+    </div>*@
+
+
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+        @*<div class="top-row px-4 navbar">
+          <a class="navbar-brand mb-0 h1" href="movies">Movies</a>
+        </div>*@
+        <nav class="navbar navbar-light bg-light">
+          <a class="navbar-brand px-4 mb-0 h1" href="movies">
+            <img src="https://files.catbox.moe/npqpje.svg" 
+            width="30" height="30" alt="" class="d-inline-block"/>
+            Movie Journal
+          </a>
+          @*<a href="movies">Movies</a>*@
+        </nav>
 
         <article class="content px-4">
             @Body

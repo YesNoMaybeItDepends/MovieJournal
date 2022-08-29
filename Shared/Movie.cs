@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace MovieJournal.Shared
 {
@@ -15,5 +16,9 @@ namespace MovieJournal.Shared
     public string Status { get; set; } = string.Empty;
     public int? Stars { get; set; } = null;
     public string Review { get; set; } = string.Empty;
+    public string Image { get; set; }
   }
 }
+
+
+

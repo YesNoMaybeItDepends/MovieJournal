@@ -15,23 +15,25 @@ namespace MovieJournal.Server.Data
       modelBuilder.Entity<Movie>().HasData(
         new Movie
         {
-          Id = 0,
+          Id = 1,
           Title = "Street Kings",
           Year = 2008,
           Genre = "Crime",
           Status = "Not Seen",
           Stars = 55,
-          Review = "Yep"
+          Review = "Yep",
+          Image = String.Empty,
         },
         new Movie
         {
-          Id = 1,
+          Id = 2,
           Title = "Spirited Away",
           Year = 2001,
           Genre = "Animation",
           Status = "Seen",
           Stars = 96,
-          Review = "Yep"
+          Review = "Yep",
+          Image = String.Empty,
         }
       );
     }

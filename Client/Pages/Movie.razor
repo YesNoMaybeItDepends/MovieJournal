@@ -3,6 +3,7 @@
 @using Services.MovieService;
 @inject IMovieService MovieService;
 @using MovieJournal.Shared;
+@using Microsoft.AspNetCore.Components.Web;
 
 @if (Id == null)
 {
@@ -35,10 +36,21 @@ else
   <label for="review">Review</label>
   <InputText id="review" @bind-Value="movie.Review" class="form-control"/>
 
+  <br />
+  <div class="form-control-file">
+    <label for="image">Image</label>
+    <br />
+    <InputFile OnChange="OnFileChange"/>
+    <img src=@movie.Image/>
+  </div>
+
+  <br />
+  <br />
+
   <button type="submit" class="btn btn-primary" @onclick="HandleSubmit">@buttonText</button>
   @if (showDelete)
     {
-      <button type="button" class="btn btn-danger">Delete</button>  
+      <button type="button" class="btn btn-danger" @onclick="HandleDelete">Delete Movie</button>  
     }
 </EditForm>
 
@@ -74,6 +86,7 @@ else
     {
         if (Id != null)
         {
+
             MovieService.UpdateMovie(movie);
             buttonText = "Submitted changes";
         }
@@ -81,5 +94,20 @@ else
         {
             await MovieService.CreateMovie(movie);
         }
+    }
+
+    async Task HandleDelete()
+    {
+        await MovieService.DeleteMovie(movie.Id);
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = "image/png";
+        var resizedImage = await e.File.RequestImageFileAsync(format, 45, 67);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        movie.Image = imageData;
     }
 }

@@ -15,6 +15,7 @@
       <th>Year</th>
       <th>Stars</th>
       <th>Review</th>
+      <th>Image</th>
     </tr>
   </thead>
   <tbody>
@@ -28,6 +29,7 @@
               <td>@movie.Year</td>
               <td>@movie.Stars</td>
               <td>@movie.Review</td>
+              <td><img src=@movie.Image><img /></td>
               <td>
                 <button class="btn btn-primary" @onclick="() => ShowMovie(movie.Id)"><i class="oi oi-pencil"/></button>
               </td>
@@ -36,6 +38,16 @@
     </tbody>
 </table>
 <button class="btn btn-primary" @onclick="CreateNewMovie">Create New Movie</button>
+
+<style>
+  img {
+    display:block;
+    max-width:45px;
+    max-height:67px;
+    width:auto;
+    height:auto;
+  }
+</style>
 
 @code {
     protected override async Task OnInitializedAsync()
@@ -51,5 +63,18 @@
     void CreateNewMovie()
     {
         NavigationManager.NavigateTo("movie");
+    }
+
+    void sneed(string image)
+    {
+        //var base64string = Convert.ToBase64String(image, 0, image.Length);
+        //string imagesrc = "data:image/png;base64," + base64string;
+        
+        //Bitmap bitmap;
+        //using (var memoryStream = new MemoryStream(image))
+        //{
+        //    bitmap = new Bitmap(memoryStream);
+        //}
+        //return imagesrc;
     }
 }

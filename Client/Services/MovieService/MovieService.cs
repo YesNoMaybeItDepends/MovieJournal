@@ -40,8 +40,8 @@ namespace MovieJournal.Client.Services.MovieService
 
     public async Task CreateMovie(Movie movie)
     {
-      movie.Id = Movies.Count + 1;
-      Movies.Add(movie);
+      var result = await _http.PostAsJsonAsync($"api/movie", movie);
+      await SetMovies(result);
     }
 
     public async Task UpdateMovie(Movie movie)
@@ -57,9 +57,10 @@ namespace MovieJournal.Client.Services.MovieService
       _navigationManager.NavigateTo("movies");
     }
 
-    public Task DeleteMovie(int id)
+    public async Task DeleteMovie(int id)
     {
-      throw new NotImplementedException("AAAAAAAAAA");
+      var result = await _http.DeleteAsync($"api/movie/{id}");
+      await SetMovies(result);
     }
   }
 }
