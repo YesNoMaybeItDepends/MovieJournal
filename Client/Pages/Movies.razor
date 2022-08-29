@@ -1,4 +1,5 @@
-﻿@page "/movies"
+﻿@page "/"
+@page "/movies"
 @using MovieJournal.Client.Services.MovieService;
 @inject IMovieService MovieService;
 @inject NavigationManager NavigationManager;
@@ -10,7 +11,6 @@
     <tr>
       <th>Id</th>
       <th>Title</th>
-      <th>Status</th>
       <th>Genre</th>
       <th>Year</th>
       <th>Stars</th>
@@ -24,10 +24,13 @@
             <tr>
               <td>@movie.Id</td>
               <td>@movie.Title</td>
-              <td>@movie.Status</td>
               <td>@movie.Genre</td>
               <td>@movie.Year</td>
-              <td>@movie.Stars</td>
+              <td> @for(int i = 0; i != movie.Stars; i++)
+                {
+                  <i class="oi oi-star"/>
+                }
+              </td>
               <td>@movie.Review</td>
               <td><img src=@movie.Image><img /></td>
               <td>
